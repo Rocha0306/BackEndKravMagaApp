@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,18 +33,30 @@ public class UsersCase extends CrudCases<Usuarios> {
     }
 
     @Override
-    public Usuarios Find(Usuarios users) {
-        return null;
+    public List<Usuarios> Find() {
+        return usersRepository.findAll();
     }
 
     @Override
-    public Usuarios Delete(Usuarios users) {
-        return null;
+    public Usuarios Delete(Usuarios usersparametro) {
+        Usuarios usersdatabase = usersRepository.findByEmail(usersparametro.getEmail());
+        if(usersdatabase == null) {
+            throw new IllegalArgumentException("Nao ta no banco lixo");
+        }
+        usersparametro.setId(usersdatabase.getId());
+        usersRepository.delete(usersdatabase);
+        return usersdatabase;
     }
 
     @Override
-    public Usuarios Update(Usuarios users) {
-        return null;
+    public Usuarios Update(Usuarios usersparametro) {
+        Usuarios usersdatabase = usersRepository.findByEmail(usersparametro.getEmail());
+        if(usersdatabase == null) {
+            throw new IllegalArgumentException("Nao ta no banco lixo");
+        }
+        usersparametro.setId(usersdatabase.getId());
+        usersRepository.save(usersdatabase);
+        return usersdatabase;
     }
 
 }

@@ -33,9 +33,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getRequestURI().equals("/Auth") || request.getRequestURI().equals("/Users") || request.getRequestURI().equals("/swagger") ) {
-           filterChain.doFilter(request, response);
+        String uri = request.getRequestURI();
+
+        if (uri.startsWith("/Auth") ||
+                uri.startsWith("/Users") ||
+                uri.startsWith("/swagger-ui") ||
+                uri.startsWith("/v3/api-docs") ||
+                uri.startsWith("/swagger-resources") ||
+                uri.startsWith("/webjars")) {
+
+            filterChain.doFilter(request, response);
+            return;
         }
+
 
         else {
             String Header = request.getHeader("Authorization");
@@ -56,7 +66,5 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         }
-
-        filterChain.doFilter(request, response);
     }
 }

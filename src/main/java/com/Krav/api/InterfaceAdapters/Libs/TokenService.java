@@ -7,6 +7,7 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -40,9 +41,16 @@ public class TokenService {
     }
 
     public String verifyToken(String token) throws JWTVerificationException {
-        Algorithm algorithm = Algorithm.HMAC256("secret");
-        JWTVerifier jwtVerifier = com.auth0.jwt.JWT.require(algorithm).acceptExpiresAt(1800).build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        return decodedJWT.getSubject();
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier jwtVerifier = com.auth0.jwt.JWT.require(algorithm).acceptExpiresAt(1800).build();
+            DecodedJWT decodedJWT = jwtVerifier.verify(token);
+            return decodedJWT.getSubject();
+        } catch (JWTDecodeException e) {
+            throw new JWTDecodeException("Algum problema na decodificaçao do token, tu tá tentando invadir arrombado?");
+        }
+
+
     }
 }

@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SecondaryRow;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class ProdutosDTO {
 
         @NotBlank
-        public String id;
+        public UUID id;
 
         @NotBlank
         public String nome;

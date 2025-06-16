@@ -17,12 +17,11 @@ public class Produtos {
     @Id
     private UUID id;
 
+    private String nome;
 
-    private String Nome;
+    private Integer quantidade;
 
-    private Integer Quantidade;
-
-    private Integer Preco;
+    private Integer preco;
 
 
 

@@ -1,4 +1,4 @@
 package com.Krav.api.InterfaceAdapters.DTOs;
 
-public record PagamentoDTO() {
+public record MessageDTO(String Message) {
 }

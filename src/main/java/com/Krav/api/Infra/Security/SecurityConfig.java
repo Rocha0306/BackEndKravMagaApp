@@ -29,15 +29,27 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/Auth", "/swagger/index.html").permitAll()
+                        .requestMatchers(
+                                "/Auth",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/Users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Produtos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/Produtos").hasAuthority("INSTRUTOR")
                         .requestMatchers(HttpMethod.PUT, "/Produtos").hasAuthority("INSTRUTOR")
                         .requestMatchers(HttpMethod.DELETE, "/Produtos").hasAuthority("INSTRUTOR")
+                        .requestMatchers(HttpMethod.GET, "/Users").hasAuthority("INSTRUTOR")
+                        .requestMatchers(HttpMethod.PUT, "/Users").hasAuthority("INSTRUTOR")
+                        .requestMatchers(HttpMethod.DELETE, "/Users").hasAuthority("INSTRUTOR")
+                        .requestMatchers(HttpMethod.GET, "/Permissao").hasAuthority("ALUNO")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+
 
     }
 

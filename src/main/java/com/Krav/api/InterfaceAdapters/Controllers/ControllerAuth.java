@@ -7,6 +7,7 @@ import com.Krav.api.InterfaceAdapters.DTOs.TokenDTO;
 import com.Krav.api.InterfaceAdapters.Libs.TokenService;
 import com.Krav.api.InterfaceAdapters.Database.Entities.Usuarios;
 import com.Krav.api.InterfaceAdapters.Database.Repository.UsersRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ public class ControllerAuth {
     @Autowired
     private ServiceUserDetails serviceUserDetails;
     @PostMapping("/Auth")
+    @Operation(summary = "Endpoint de Autenticaçao, é necessário se autenticar para consumir")
     public TokenDTO Login(@RequestBody AuthDTO auth) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(auth.Email(), auth.Senha());

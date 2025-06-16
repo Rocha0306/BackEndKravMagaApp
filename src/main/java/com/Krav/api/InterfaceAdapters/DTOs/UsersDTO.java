@@ -11,10 +11,15 @@ import lombok.Setter;
 public class UsersDTO {
 
     @NotBlank
-    private String Nome_Completo;
+    public String Nome;
     @NotBlank
-    private String Password;
+    public String Sobrenome;
     @NotBlank
-    private String Numero_Celular;
+    public String Senha;
+    @NotBlank
+    @Email
+    public String Email;
+    @NotBlank
+    public String Faixa;
 
 }

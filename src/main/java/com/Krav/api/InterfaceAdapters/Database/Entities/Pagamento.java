@@ -1,4 +1,4 @@
-package com.Krav.api.Entities;
+package com.Krav.api.InterfaceAdapters.Database.Entities;
 
 
 import jakarta.persistence.*;
@@ -12,8 +12,8 @@ public class Pagamento {
 
 
     @OneToOne
-    @JoinTable(name = "Users", joinColumns = @JoinColumn(name = "ID"))
-    private Users user;
+    @JoinTable(name = "Usuarios", joinColumns = @JoinColumn(name = "ID"))
+    private Usuarios user;
 
     /*
 
